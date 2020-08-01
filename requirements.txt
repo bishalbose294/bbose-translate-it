@@ -1,10 +1,7 @@
-playsound
 gtts
 SpeechRecognition
-wave
 Flask
 googletrans
-pyaudio
 gunicorn
 soundfile
 librosa
