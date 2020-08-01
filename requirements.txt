@@ -1,0 +1,10 @@
+playsound
+gtts
+speech_recognition
+wave
+Flask
+googletrans
+pyaudio
+gunicorn
+soundfile
+librosa
