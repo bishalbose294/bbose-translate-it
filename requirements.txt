@@ -6,3 +6,4 @@ gunicorn
 soundfile
 librosa
 SoundFile
+pysndfile
