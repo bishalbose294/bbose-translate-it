@@ -1,11 +1,7 @@
 from flask import Flask, render_template,  url_for, request, send_file, redirect
-import googletrans
 from googletrans import Translator
-import pyaudio
-import wave
 import speech_recognition as sr
 import gtts
-from playsound import playsound
 import os
 import librosa
 import soundfile as sf
