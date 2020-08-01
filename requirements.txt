@@ -1,6 +1,6 @@
 playsound
 gtts
-speech_recognition
+SpeechRecognition
 wave
 Flask
 googletrans
