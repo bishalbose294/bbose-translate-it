@@ -5,5 +5,3 @@ googletrans
 gunicorn
 soundfile
 librosa
-SoundFile
-pysndfile
