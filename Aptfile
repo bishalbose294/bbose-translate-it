@@ -1,1 +1,8 @@
-libasound2-dev python-dev python-numpy python-setuptools libsndfile-dev ffmpeg libav-tools x264 x265
+libasound2-dev
+python-dev
+python-numpy
+python-setuptools
+libsndfile-dev
+ffmpeg
+ffmpeg-devel
+libav-tools x264 x265
