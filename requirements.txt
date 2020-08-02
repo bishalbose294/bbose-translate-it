@@ -5,3 +5,4 @@ googletrans
 gunicorn
 soundfile
 librosa
+scikits.samplerate
