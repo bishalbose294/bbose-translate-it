@@ -1,4 +1,3 @@
-numpy
 gtts
 SpeechRecognition
 Flask
@@ -6,4 +5,3 @@ googletrans
 gunicorn
 soundfile
 librosa
-scikits.samplerate
