@@ -3,5 +3,4 @@ python-dev
 python-numpy
 python-setuptools
 libsndfile-dev
-ffmpeg
 libav-tools x264 x265
