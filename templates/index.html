@@ -1,174 +1,168 @@
 <html>
-
-<head>
-	<style>
-		body {
-					background-image: url("https://cdn.olscafp.org/wp-content/uploads/2013/05/23141845/footer.jpg");
-					font-family: Georgia, Times, serif;
-					color: white;
-					background-color: powderblue
-					background-repeat: no-repeat;
-					background-size: 100% 100%;
-			}
-		  
-	button {
-		width: 35px;
-		height: 35px;
-		font-size: 0;
-		background-color: red;
-		border: 0;
-		border-radius: 35px;
-		margin: 18px;
-		outline: none;
-	}
-	
-	.notRec{
-		background-color: darkred;
-	}
-	
-	.Rec{
-		animation-name: pulse;
-		animation-duration: 1.5s;
-		animation-iteration-count: infinite;
-		animation-timing-function: linear;
-	}
-	
-	@keyframes pulse{
-		0%{
-			box-shadow: 0px 0px 10px 0px rgba(173,0,0,.3);
-		}
-		65%{
-			box-shadow: 0px 0px 10px 15px rgba(173,0,0,.3);
-		}
-		90%{
-			box-shadow: 0px 0px 10px 15px rgba(173,0,0,0);
-		}
-	}
-			 .content {
-					width: 500px;
-					height: 600px;
-					position: absolute; /*Can also be `fixed`*/
-					left: 0%;
-					right: 0;
-					top: 30%;
-					bottom: 0;
-					margin: auto;
-					/*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
-					max-width: 100%;
-					max-height: 100%;
-					overflow: auto;
-			}
-	         h2 {
-	         left: 100px;
-	         position: relative;
-	         }
-			 h3 {
-	         left: 100px;
-	         position: relative;
-	         }
-			.bottomleft {
-				position: absolute;
-				bottom: 8px;
-				left: 16px;
-				font-size: 14px;
-		}
-	</style>
-</head>
-
-<body>
-	<div class='content'>
-		<h2>Record a sentence in English</h2>
-		<br>
-		<br>
-		<p align='center'>Click the button to start/stop recording</p>
-		<br>
-		<p align='center' id="demo">Timer</p>
-		<p align='center'>
-			<button id="recButton" class="notRec"></button>
-			<br>
-			<br>
-		</p>
-		<h3>Your Hindi Translation will appear Here</h3>
-		<p align='center'>
-			<audio id=translatedAudio></audio>
-		</p>
-		
-	</div>
-	<div class='bottomleft'>
-		<h5>Disclaimer :
-		<ul>
-			<li>Please record sentences less than 15 seconds for better accuracy.</li>
-<li>Be patient as it takes few seconds to convert the sentence.</li>
-<li>Be Loud and Clear, and keep the tempo slow.</li>
-		</ul>
-		</h5> 
-		<h5>Steps :
-		<ul>
-<li>Click on the record button, wait for the timer to start, the button starts pulsating.</li>
-<li>Record your sentence.</li>
-<li>Click on the same button to stop recoding.</li>
-<li>Wait for a few seconds, your converted audio will be visible to you and will autoplay.</li>
-<li>If it didn't work then,it might happen that your audio was not clear enough. Try again.</li>
-		</ul>
-		</h5> 
-	</div>
-	<script>
-		var c = 0;
-			function myCounter() {
-			  document.getElementById("demo").innerHTML = ++c;
-			}
-			navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
-	         
-	                  function handlerFunction(stream) {
-	                  rec = new MediaRecorder(stream);
-	                  rec.ondataavailable = e => {
-	                    audioChunks.push(e.data);
-	                    if (rec.state == "inactive"){
-	                      let blob = new Blob(audioChunks,{ type : 'audio/wav; codecs=0' });
-	         	let data = new FormData();
-	         	data.append('file', blob);
-	         	
-	         	var request = new XMLHttpRequest();
-	         	request.responseType = 'blob';
-	         	request.open("POST", "{{ url_for( 'textEngToHin') }}");
-	         	request.send(data);
-	         	
-	         	request.onload = function() {
-	         	   if (request.status == 200) {
-	         		  let blob_resp = new Blob([this.response],{ type : 'audio/wav; codecs=0' });
-	         		  console.log(blob_resp)
-	         		  var url = URL.createObjectURL(blob_resp);
-	         		  translatedAudio.load()
-	         		  translatedAudio.src = url;
-	         		  translatedAudio.controls=true;
-	         		  translatedAudio.autoplay=true;
-	         	   } else { 
-	         		  console.log(this.response)
-	         	   }
-	         	 };
-	                    }
-	                  }
-	                }
-	
-				recButton.onclick = e => {
-				const element = document.querySelector("#recButton");
-					if(element.classList.contains('notRec')){
-						element.classList.remove('notRec');
-						element.classList.add('Rec');
-						myTimer = setInterval(myCounter, 1000)
-						audioChunks = [];
-						rec.start();
-					}
-					else{
-						clearInterval(myTimer)
-						c = 0
-						document.getElementById("demo").innerHTML = 'Timer'
-						element.classList.remove("Rec");
-						element.classList.add("notRec");
-						rec.stop();
-					}
-				};
-	</script>
-</body>
-
+   <head>
+      <style>
+         body {
+         background-image: url("https://cdn.olscafp.org/wp-content/uploads/2013/05/23141845/footer.jpg");
+         font-family: Georgia, Times, serif;
+         color: white;
+         background-color: powderblue
+         background-repeat: no-repeat;
+         background-size: 100% 100%;
+         }
+         button {
+         width: 35px;
+         height: 35px;
+         font-size: 0;
+         background-color: red;
+         border: 0;
+         border-radius: 35px;
+         margin: 18px;
+         outline: none;
+         }
+         .notRec{
+         background-color: darkred;
+         }
+         .Rec{
+         animation-name: pulse;
+         animation-duration: 1.5s;
+         animation-iteration-count: infinite;
+         animation-timing-function: linear;
+         }
+         @keyframes pulse{
+         0%{
+         box-shadow: 0px 0px 10px 0px rgba(173,0,0,.3);
+         }
+         65%{
+         box-shadow: 0px 0px 10px 15px rgba(173,0,0,.3);
+         }
+         90%{
+         box-shadow: 0px 0px 10px 15px rgba(173,0,0,0);
+         }
+         }
+         .content {
+         width: 500px;
+         height: 600px;
+         position: absolute; /*Can also be `fixed`*/
+         left: 0%;
+         right: 0;
+         top: 30%;
+         bottom: 0;
+         margin: auto;
+         /*Solves a problem in which the content is being cut when the div is smaller than its' wrapper:*/
+         max-width: 100%;
+         max-height: 100%;
+         overflow: auto;
+         }
+         h2 {
+         left: 100px;
+         position: relative;
+         }
+         h3 {
+         left: 100px;
+         position: relative;
+         }
+         .bottomleft {
+         position: absolute;
+         bottom: 8px;
+         left: 16px;
+         font-size: 14px;
+         }
+      </style>
+   </head>
+   <body>
+      <div class='content'>
+         <h2>Record a sentence in English</h2>
+         <br>
+         <br>
+         <p align='center'>Click the button to start/stop recording</p>
+         <br>
+         <p align='center' id="demo">Timer</p>
+         <p align='center'>
+            <button id="recButton" class="notRec"></button>
+            <br>
+            <br>
+         </p>
+         <h3>Your Hindi Translation will appear Here</h3>
+         <p align='center'>
+            <audio id=translatedAudio></audio>
+         </p>
+      </div>
+      <div class='bottomleft'>
+         <h5>
+            Disclaimer :
+            <ul>
+               <li>Please record sentences less than 15 seconds for better accuracy.</li>
+               <li>Be patient as it takes few seconds to convert the sentence.</li>
+               <li>Be Loud and Clear, and keep the tempo slow.</li>
+            </ul>
+         </h5>
+         <h5>
+            Steps :
+            <ul>
+               <li>Click on the record button, wait for the timer to start, the button starts pulsating.</li>
+               <li>Record your sentence.</li>
+               <li>Click on the same button to stop recoding.</li>
+               <li>Wait for a few seconds, your converted audio will be visible to you and will autoplay.</li>
+               <li>If it didn't work then,it might happen that your audio was not clear enough. Try again.</li>
+            </ul>
+         </h5>
+      </div>
+      <script>
+         var c = 0;
+         	function myCounter() {
+         	  document.getElementById("demo").innerHTML = ++c;
+         	}
+         	navigator.mediaDevices.getUserMedia({audio:true}).then(stream => {handlerFunction(stream)})
+                 
+                          function handlerFunction(stream) {
+                          rec = new MediaRecorder(stream);
+                          rec.ondataavailable = e => {
+                            audioChunks.push(e.data);
+                            if (rec.state == "inactive"){
+                              let blob = new Blob(audioChunks,{ type : 'audio/wav; codecs=0' });
+                 	let data = new FormData();
+                 	data.append('file', blob);
+                 	
+                 	var request = new XMLHttpRequest();
+                 	request.responseType = 'blob';
+                 	request.open("POST", "{{ url_for( 'textEngToHin') }}");
+                 	request.send(data);
+                 	
+                 	request.onload = function() {
+                 	   if (request.status == 200) {
+                 		  let blob_resp = new Blob([this.response],{ type : 'audio/wav; codecs=0' });
+                 		  console.log(blob_resp)
+                 		  var url = URL.createObjectURL(blob_resp);
+                 		  translatedAudio.load()
+                 		  translatedAudio.src = url;
+                 		  translatedAudio.controls=true;
+                 		  translatedAudio.autoplay=true;
+                 	   } else { 
+                 		  console.log(this.response)
+                 	   }
+                 	 };
+                            }
+                          }
+                        }
+         
+         		recButton.onclick = e => {
+         		const element = document.querySelector("#recButton");
+         			if(element.classList.contains('notRec')){
+         				element.classList.remove('notRec');
+         				element.classList.add('Rec');
+         				myTimer = setInterval(myCounter, 1000)
+         				audioChunks = [];
+         				rec.start();
+         			}
+         			else{
+         				clearInterval(myTimer)
+         				c = 0
+         				document.getElementById("demo").innerHTML = 'Timer'
+         				element.classList.remove("Rec");
+         				element.classList.add("notRec");
+         				rec.stop();
+         			}
+         		};
+      </script>
+   </body>
 </html>
